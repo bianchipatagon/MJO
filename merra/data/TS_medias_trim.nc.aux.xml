@@ -1,0 +1,50 @@
+<PAMDataset>
+  <Subdataset name="TS_DJF">
+    <PAMDataset>
+      <PAMRasterBand band="1">
+        <Metadata>
+          <MDI key="STATISTICS_MAXIMUM">304.9739074707</MDI>
+          <MDI key="STATISTICS_MEAN">292.88025157216</MDI>
+          <MDI key="STATISTICS_MINIMUM">273.6448059082</MDI>
+          <MDI key="STATISTICS_STDDEV">6.6041091877516</MDI>
+        </Metadata>
+      </PAMRasterBand>
+    </PAMDataset>
+  </Subdataset>
+  <Subdataset name="TS_JJA">
+    <PAMDataset>
+      <PAMRasterBand band="1">
+        <Metadata>
+          <MDI key="STATISTICS_MAXIMUM">297.4723815918</MDI>
+          <MDI key="STATISTICS_MEAN">282.44665649414</MDI>
+          <MDI key="STATISTICS_MINIMUM">260.99172973633</MDI>
+          <MDI key="STATISTICS_STDDEV">6.2647444929363</MDI>
+        </Metadata>
+      </PAMRasterBand>
+    </PAMDataset>
+  </Subdataset>
+  <Subdataset name="TS_MAM">
+    <PAMDataset>
+      <PAMRasterBand band="1">
+        <Metadata>
+          <MDI key="STATISTICS_MAXIMUM">300.58828735352</MDI>
+          <MDI key="STATISTICS_MEAN">287.99105121319</MDI>
+          <MDI key="STATISTICS_MINIMUM">271.5927734375</MDI>
+          <MDI key="STATISTICS_STDDEV">5.8907573212234</MDI>
+        </Metadata>
+      </PAMRasterBand>
+    </PAMDataset>
+  </Subdataset>
+  <Subdataset name="TS_SON">
+    <PAMDataset>
+      <PAMRasterBand band="1">
+        <Metadata>
+          <MDI key="STATISTICS_MAXIMUM">303.85284423828</MDI>
+          <MDI key="STATISTICS_MEAN">287.46440047379</MDI>
+          <MDI key="STATISTICS_MINIMUM">271.35037231445</MDI>
+          <MDI key="STATISTICS_STDDEV">6.9237498092693</MDI>
+        </Metadata>
+      </PAMRasterBand>
+    </PAMDataset>
+  </Subdataset>
+</PAMDataset>
