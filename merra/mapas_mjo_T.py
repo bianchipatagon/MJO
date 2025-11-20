@@ -69,7 +69,7 @@ for k, ax in enumerate(axes):
     #esto de acá me volvió loco insulté al cartopy
 
 cb = axes.cbar_axes[0].colorbar(im)
-cb.set_label('2M temperature [°c]', fontsize = 12)
+cb.set_label('temperatura [°c]', fontsize = 12)
 cb.ax.tick_params(labelsize=12) 
 
 # ~ cbar_ax = fig.add_axes(([0.92, 0.15, 0.02, 0.6]))  #a la derecha
@@ -77,7 +77,7 @@ cb.ax.tick_params(labelsize=12)
 # ~ cbar.set_label('Temperature [°c]', fontsize = 12)
 # ~ cbar.ax.tick_params(labelsize=12) 
 
-fig.text(0.42, 0.87, 'MJO phase', fontsize=14)
+fig.text(0.42, 0.87, 'fase MJO ', fontsize=14)
 fig.subplots_adjust(wspace=0.1, hspace = 0.1)
 plt.savefig('T2M.png',bbox_inches="tight", dpi=600)
 

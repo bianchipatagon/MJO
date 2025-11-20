@@ -45,7 +45,13 @@ norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
 for k, ax in enumerate(axes):
   i = k//3
   j = k%3
+    # ~ # Skip middle column (j == 1)
+  # ~ if j == 1:
+    # ~ ax.set_visible(False)  # Hide the middle column axes
+    # ~ continue
   trim = ('DJF', 'MAM', 'JJA', 'SON')[i]
+  # ~ phase = j if j < 1 else j - 1  # Adjust phase: 0 stays 0, 2 becomes 1
+
   phase = j
 
   field = 'T2M' +str(phase)+trim
@@ -62,18 +68,17 @@ for k, ax in enumerate(axes):
 
   
 cb = axes.cbar_axes[0].colorbar(im)
-cb.set_label('2M temperature [°c]', fontsize = 12)
+cb.set_label('temperatura [°c]', fontsize = 12)
 cb.ax.tick_params(labelsize=12) 
 
-fig.text(0.3, 0.75, 'DJF', fontsize = 12, rotation='vertical')
+fig.text(0.3, 0.75, 'DEF', fontsize = 12, rotation='vertical')
 fig.text(0.3, 0.56, 'MAM', fontsize = 12, rotation='vertical')
 fig.text(0.3, 0.37, 'JJA', fontsize = 12, rotation='vertical')
 fig.text(0.3, 0.18, 'SON', fontsize = 12, rotation='vertical')
 
 fig.text(0.37, 0.89, '<-1', fontsize=12)
-fig.text(0.46, 0.89, '[-1,1]', fontsize=12)
 fig.text(0.57, 0.89, '>+1', fontsize=12)
-fig.text(0.44, 0.92, 'SAM index', fontsize=14)
+fig.text(0.44, 0.92, 'Indice AAO', fontsize=14)
   
-plt.savefig('t.png',bbox_inches="tight", dpi=600)
+plt.savefig('t2.png',bbox_inches="tight", dpi=300)
 # ~ plt.show()

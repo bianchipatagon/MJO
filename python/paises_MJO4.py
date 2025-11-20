@@ -16,7 +16,8 @@ Vuru_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/uru-vi
 Varg_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/arg-vie.txt', header=None, delimiter=';', na_values='-99')
 Vchi_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/chi-vie.txt', header=None, delimiter=';', na_values='-99')
 
-Vmad = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/WH.txt', header=None, delimiter=',', na_values='-99') ### year, month, day, day of week, RMM1, RMM2, phase, amplitude
+# ~ Vmad = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/WH.txt', header=None, delimiter=',', na_values='-99') ### year, month, day, day of week, RMM1, RMM2, phase, amplitude
+Vmad = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/filtered.txt', header=None, delimiter=',', na_values='-99') ### year, month, day, day of week, RMM1, RMM2, phase, amplitude
 
 series = pd.DataFrame()
 # cargamos mes, para despues filtrar por estacion
@@ -232,7 +233,7 @@ fig.text(0.05, 0.42, 'variation [%]', fontsize=14, rotation='vertical')
 fig.text(0.45, 0.05, 'MJO phase', fontsize=14)
 fig.subplots_adjust(wspace=0.2, hspace=0.08)
 fig.subplots_adjust(bottom=0.15)
-plt.savefig('/home/emi/Dropbox/DTEC/MJO/imagenes/paisesV.png',bbox_inches="tight", dpi=600)
+plt.savefig('/home/emi/Dropbox/DTEC/MJO/imagenes/paisesV-filt.png',bbox_inches="tight", dpi=600)
 
 #################################
 #######SOL####################
@@ -246,7 +247,8 @@ Suru_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/uru-so
 Sarg_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/arg-sol.txt', header=None, delimiter=';', na_values='-99')
 Schi_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/chi-sol.txt', header=None, delimiter=';', na_values='-99')
 
-mad = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/WH.txt', header=None, delimiter=',', na_values='-99') ### year, month, day, day oSf week, RMM1, RMM2, phase, amplitude
+# ~ mad = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/WH.txt', header=None, delimiter=',', na_values='-99') ### year, month, day, day oSf week, RMM1, RMM2, phase, amplitude
+mad = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/filtered.txt', header=None, delimiter=',', na_values='-99') ### year, month, day, day oSf week, RMM1, RMM2, phase, amplitude
 
 series = pd.DataFrame()
 # cSargamos mes, para despues Sfiltrar por estacion
@@ -460,7 +462,7 @@ fig.text(0.05, 0.42, 'variation [%]', fontsize=14, rotation='vertical')
 fig.text(0.45, 0.05, 'MJO phase', fontsize=14)
 fig.subplots_adjust(wspace=0.2, hspace=0.08)
 fig.subplots_adjust(bottom=0.15)
-plt.savefig('/home/emi/Dropbox/DTEC/MJO/imagenes/paisesS.png',bbox_inches="tight", dpi=600)
+plt.savefig('/home/emi/Dropbox/DTEC/MJO/imagenes/paisesS-filt.png',bbox_inches="tight", dpi=600)
 
 
 #################################
