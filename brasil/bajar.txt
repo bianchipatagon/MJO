@@ -1,0 +1,6 @@
+temperatura
+cld area fraction
+cld total
+
+lat lon todo brasil
+período: 2000 a 2020 , mismo período 

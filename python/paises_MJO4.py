@@ -478,10 +478,13 @@ Duru_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/demanda/uru-dem.txt', he
 Darg_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/demanda/arg-dem.txt', header=None, delimiter=';')
 Dchi_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/demanda/chi-dem2.txt', header=None, delimiter=';')
 
-mad = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/WH2011.txt', header=None, delimiter=',', na_values='-99') ### year, month, day, day oDf week, RMM1, RMM2, phase, amplitude
-mad2 = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/WH2014.txt', header=None, delimiter=',', na_values='-99')
-mad3 = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/WH2007.txt', header=None, delimiter=',', na_values='-99')
+# ~ mad = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/WH2011.txt', header=None, delimiter=',', na_values='-99') ### year, month, day, day oDf week, RMM1, RMM2, phase, amplitude
+# ~ mad2 = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/WH2014.txt', header=None, delimiter=',', na_values='-99')
+# ~ mad3 = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/WH2007.txt', header=None, delimiter=',', na_values='-99')
 
+d = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/filtered2011.txt', header=None, delimiter=',', na_values='-99') ### year, month, day, day oDf week, RMM1, RMM2, phase, amplitude
+mad2 = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/filtered2014.txt', header=None, delimiter=',', na_values='-99')
+mad3 = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/filtered2007.txt', header=None, delimiter=',', na_values='-99')
 ## aca hay que armar dataDframes diDferentes por que las series de demanda tienen longitudes diDferentes
 #### DuruGUAY
 series = pd.DataFrame()
@@ -830,7 +833,7 @@ fig.text(0.05, 0.42, 'variation [%]', fontsize=14, rotation='vertical')
 fig.text(0.45, 0.05, 'MJO phase', fontsize=14)
 fig.subplots_adjust(wspace=0.2, hspace=0.08)
 fig.subplots_adjust(bottom=0.15)
-plt.savefig('/home/emi/Dropbox/DTEC/MJO/imagenes/paisesD.png',bbox_inches="tight", dpi=600)
+plt.savefig('/home/emi/Dropbox/DTEC/MJO/imagenes/paisesD-filt.png',bbox_inches="tight", dpi=600)
 
 # ~ fig, (ax1,ax2,ax3,ax4) = plt.subplots(1, 4,figsize=(9,2.5), sharey=True, sharex= True)
 
