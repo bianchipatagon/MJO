@@ -37,7 +37,7 @@ axes = AxesGrid(fig, 111, axes_class=axes_class,
                     share_all=True,
                     label_mode='keep')
 
-ds = xr.open_dataset('data/W_composite.nc')
+ds = xr.open_dataset('/home/emi/Dropbox/DTEC/MJO/datos/mjo/W_composite_2.nc')
 ds1 = xr.open_dataset('data/SLP_composite.nc')
 
 cmap = (mpl.colors.ListedColormap(['slateblue', 'mediumslateblue', 'lavender', 'white','palegreen' , 'mediumseagreen' ,'green' ])

@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 #ds = xr.open_dataset('slp_diarios.nc')
 
-startd = '20000101'
-endd = '20221231'
+
+
 def verafilter(ds):
     N =ds.sizes['time'] #  ds['slp']['time'].size
     Nlat = ds.sizes['lat']
@@ -21,7 +21,7 @@ def verafilter(ds):
     lons = ds['lon'].data
     df.columns = pd.MultiIndex.from_product([lats, lons], names=['lat', 'lon'])
     df.index = pd.DatetimeIndex(ds['time'].data, name='time')
-    df = df.loc[pd.date_range(start=startd,end=endd)]
+    df = df.loc[pd.date_range(start='20000101',end='20221231')]    #end='20240701')]
 ##################################################################
     #climatologico diario
     d1 = df.sub(df.groupby(df.index.day_of_year).transform('mean') )   #.mean() es distinto cambia el índice no se bien cómo
@@ -48,10 +48,10 @@ def verafilter(ds):
     # plt.savefig('d1.png')
 
 
-    mjo = pd.read_csv('../serie_mjo.csv', delimiter = ",") #esto es en el cluster
-    dates_mjo = pd.to_datetime(mjo[['year','month','day']])
-
-    mjo = mjo.set_index(dates_mjo).loc[pd.date_range(start=startd,end=endd)]   #  .loc[df.index])
+    wh = pd.read_csv('../fmo.1x.fase.csv')  #pd.read_csv('../serie_mjo.csv', delimiter = ",") #esto es en el cluster
+    wh.set_index(pd.DatetimeIndex(wh['datetime']),inplace=True)
+    # mjo = mjo.set_index(dates_mjo).loc[pd.date_range(start='20000101',end='20240701')]   #  .loc[df.index])
+    wh=wh['20000101':'20240701'] # recorto? igual están hasta el 2022
 
 
     #primero declaro el dataset
@@ -64,18 +64,18 @@ def verafilter(ds):
 
 
     #después lo asigno
-    print("#amplitudes > 1: " + str((abs(mjo['amplitude'])>1).sum() ))
+    print("#amplitudes > 1: " + str((abs(wh['PC1_PC2_amplitude'])>1).sum() ))
     for phase in range(1, 9):
         for j in ('DJF', 'MAM', 'JJA', 'SON'):
             # es True cuando fase y trimestre:
-            filas = (mjo['phase'].to_numpy()==phase) & (np.array(grp_ary)==j) & (abs(mjo['amplitude'])>1)
+            filas = (wh['fase'].to_numpy()==phase) & (np.array(grp_ary)==j) & (abs(wh['PC1_PC2_amplitude'])>1)
             print(str(phase)+'_'+j+": ", filas.sum(), end = " ")
             phasecut = d2.loc[filas]
             composite = phasecut.mean().to_numpy().reshape(Nlat,Nlon)
             dsaux[name +str(phase)+'_'+j].data = composite
         print()
 
-    dsaux.to_netcdf(name + '_composite_2.nc')
+    dsaux.to_netcdf(name + '_composite_WH.nc')
 
     return name
 

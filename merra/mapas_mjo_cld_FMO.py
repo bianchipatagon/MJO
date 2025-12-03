@@ -28,7 +28,7 @@ axes = AxesGrid(fig, 111, axes_class=axes_class,
                     share_all=True,
                     label_mode='keep')
 
-ds = xr.open_dataset('/home/emi/Dropbox/DTEC/MJO/datos/mjo/CLDTOT_composite_2.nc')
+ds = xr.open_dataset('/home/emi/Dropbox/DTEC/MJO/datos/mjo/CLDTOT_composite_WH.nc')
 print('ds')
 print(ds)
 
@@ -67,6 +67,6 @@ cb.ax.tick_params(labelsize=12)
 
 fig.text(0.42, 0.87, 'MJO phase', fontsize=14)
 fig.subplots_adjust(wspace=0.1, hspace = 0.1)
-plt.savefig('CLD-cmap.png',bbox_inches="tight", dpi=600)
+plt.savefig('CLD-cmap-FMO.png',bbox_inches="tight", dpi=600)
 
 plt.show()
