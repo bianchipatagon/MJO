@@ -8,16 +8,17 @@ import matplotlib as mpl
 from matplotlib.colors import LinearSegmentedColormap, Normalize
 
 #################################
-#######VIENTO####################
+#######SOL####################
 #################################
 
-Vuru = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/uru-vie-agrup.csv', header=None, delimiter=',', na_values='-99')
-Varg = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/arg-vie-agrup.csv', header=None, delimiter=',', na_values='-99')
-Vchi = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/chi-vie-agrup.csv', header=None, delimiter=',', na_values='-99')
+Vuru = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/uru-sol-agrup.csv', header=None, delimiter=',', na_values='-99')
+Varg = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/arg-sol-agrup.csv', header=None, delimiter=',', na_values='-99')
+Vchi = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/chi-sol-agrup.csv', header=None, delimiter=',', na_values='-99')
 
-Vuru_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/uru-vie.txt', header=None, delimiter=';', na_values='-99')
-Varg_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/arg-vie.txt', header=None, delimiter=';', na_values='-99')
-Vchi_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/chi-vie.txt', header=None, delimiter=';', na_values='-99')
+Vuru_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/uru-sol.txt', header=None, delimiter=';', na_values='-99')
+Varg_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/arg-sol.txt', header=None, delimiter=';', na_values='-99')
+Vchi_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/chi-sol.txt', header=None, delimiter=';', na_values='-99')
+
 
 # ~ Vmad = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/WH.txt', header=None, delimiter=',', na_values='-99') ### year, month, day, day of week, RMM1, RMM2, phase, amplitude
 Vmad = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/filtered.txt', header=None, delimiter=',', na_values='-99') ### year, month, day, day of week, RMM1, RMM2, phase, amplitude
@@ -1006,10 +1007,13 @@ Vchipri = pd.DataFrame({
     'lag0': Vchipri0
 })
 
-# ~ vmin = min(Vargver.min().min(), Vargoto.min().min(), Varginv.min().min(), Vargpri.min().min(),Vuruver.min().min(), Vuruoto.min().min(), Vuruinv.min().min(), Vurupri.min().min(),Vchiver.min().min(), Vchioto.min().min(), Vchiinv.min().min(), Vchipri.min().min())
-# ~ vmax = max(Vargver.max().max(), Vargoto.max().max(), Varginv.max().max(), Vargpri.max().max(),Vuruver.max().max(), Vuruoto.max().max(), Vuruinv.max().max(), Vurupri.max().max(),Vchiver.max().max(), Vchioto.max().max(), Vchiinv.max().max(), Vchipri.max().max())
+vmin = min(Vargver.min().min(), Vargoto.min().min(), Varginv.min().min(), Vargpri.min().min(),Vuruver.min().min(), Vuruoto.min().min(), Vuruinv.min().min(), Vurupri.min().min(),Vchiver.min().min(), Vchioto.min().min(), Vchiinv.min().min(), Vchipri.min().min())
+vmax = max(Vargver.max().max(), Vargoto.max().max(), Varginv.max().max(), Vargpri.max().max(),Vuruver.max().max(), Vuruoto.max().max(), Vuruinv.max().max(), Vurupri.max().max(),Vchiver.max().max(), Vchioto.max().max(), Vchiinv.max().max(), Vchipri.max().max())
 
-colors = ["slateblue", "white", "green"] 
+print(vmin)
+print(vmax)
+
+colors = ["dimgrey", "white", "darkorange"] 
 
 # 2. Create the custom colormap object
 # 'BlueToGreenDiverging' is a name for your custom colormap
@@ -1020,62 +1024,62 @@ fig, ((ax1,ax2,ax3),(ax4,ax5,ax6),(ax7,ax8,ax9),(ax10,ax11,ax12)) = plt.subplots
 # ~ annot_matrix = N.where(Vargver > 5  , '*', '')
 annot_matrix = N.where(Vargver > 5, '*', N.where(Vargver < -5, '*', ''))
 ax1.set_title('Argentina  ', fontsize=13)
-sns.heatmap(Vargver,cmap=custom_cmap, ax=ax1, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-10.5, vmax=10.5,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center'})
+sns.heatmap(Vargver,cmap=custom_cmap, ax=ax1, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center'})
 ax1.set_yticklabels(ax1.get_yticklabels(), rotation=0)
 ax1.xaxis.set_tick_params(length=0)
 
 annot_matrix = N.where(Vargoto > 5, '*', N.where(Vargoto < -5, '*', ''))
-sns.heatmap(Vargoto, cmap=custom_cmap, ax=ax4,yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-10.5, vmax=10.5,cbar=False)
+sns.heatmap(Vargoto, cmap=custom_cmap, ax=ax4,yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False)
 ax4.set_yticklabels(ax4.get_yticklabels(), rotation=0)
 ax4.xaxis.set_tick_params(length=0)
 
 annot_matrix = N.where(Varginv > 5, '*', N.where(Varginv < -5, '*', ''))
-sns.heatmap(Varginv,cmap=custom_cmap, ax=ax7, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-10.5, vmax=10.5,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+sns.heatmap(Varginv,cmap=custom_cmap, ax=ax7, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
 ax7.set_yticklabels(ax7.get_yticklabels(), rotation=0)
 ax7.xaxis.set_tick_params(length=0)
 
 annot_matrix = N.where(Vargpri > 5, '*', N.where(Vargpri < -5, '*', ''))
-sns.heatmap(Vargpri, cmap=custom_cmap, ax=ax10, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-10.5, vmax=10.5,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+sns.heatmap(Vargpri, cmap=custom_cmap, ax=ax10, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
 ax10.set_yticklabels(ax10.get_yticklabels(), rotation=0)
 
 ax2.set_title('Uruguay', fontsize=13)
 annot_matrix = N.where(Vuruver > 5, '*', N.where(Vuruver < -5, '*', ''))
-sns.heatmap(Vuruver, cmap=custom_cmap, ax=ax2, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-10.5, vmax=10.5,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+sns.heatmap(Vuruver, cmap=custom_cmap, ax=ax2, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
 ax2.xaxis.set_tick_params(length=0)
 ax2.yaxis.set_tick_params(length=0)
 
 annot_matrix = N.where(Vuruoto > 5, '*', N.where(Vuruoto < -5, '*', ''))
-sns.heatmap(Vuruoto,cmap=custom_cmap, ax=ax5,yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-10.5, vmax=10.5,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+sns.heatmap(Vuruoto,cmap=custom_cmap, ax=ax5,yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
 ax5.xaxis.set_tick_params(length=0)
 ax5.yaxis.set_tick_params(length=0)
 
 annot_matrix = N.where(Vuruinv > 5, '*', N.where(Vuruinv < -5, '*', ''))
-sns.heatmap(Vuruinv, cmap=custom_cmap, ax=ax8, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-10.5, vmax=10.5,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+sns.heatmap(Vuruinv, cmap=custom_cmap, ax=ax8, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
 ax8.xaxis.set_tick_params(length=0)
 ax8.yaxis.set_tick_params(length=0)
 
 annot_matrix = N.where(Vurupri > 5, '*', N.where(Vurupri < -5, '*', ''))
-sns.heatmap(Vurupri, cmap=custom_cmap, ax=ax11, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-10.5, vmax=10.5,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+sns.heatmap(Vurupri, cmap=custom_cmap, ax=ax11, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
 ax11.yaxis.set_tick_params(length=0)
 
 ax3.set_title('Chile', fontsize=13)
 annot_matrix = N.where(Vchiver > 5, '*', N.where(Vchiver < -5, '*', ''))
-sns.heatmap(Vchiver, cmap=custom_cmap, ax=ax3, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-10.5, vmax=10.5,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+sns.heatmap(Vchiver, cmap=custom_cmap, ax=ax3, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
 ax3.xaxis.set_tick_params(length=0)
 ax3.yaxis.set_tick_params(length=0)
 
 annot_matrix = N.where(Vchioto > 5, '*', N.where(Vchioto < -5, '*', ''))
-sns.heatmap(Vchioto, cmap=custom_cmap, ax=ax6,yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-10.5, vmax=10.5,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+sns.heatmap(Vchioto, cmap=custom_cmap, ax=ax6,yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
 ax6.xaxis.set_tick_params(length=0)
 ax6.yaxis.set_tick_params(length=0)
 
 annot_matrix = N.where(Vchiinv > 5, '*', N.where(Vchiinv < -5, '*', ''))
-sns.heatmap(Vchiinv, cmap=custom_cmap, ax=ax9, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-10.5, vmax=10.5,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+sns.heatmap(Vchiinv, cmap=custom_cmap, ax=ax9, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
 ax9.xaxis.set_tick_params(length=0)
 ax9.yaxis.set_tick_params(length=0)
 
 annot_matrix = N.where(Vchipri > 5, '*', N.where(Vchipri < -5, '*', ''))
-sns.heatmap(Vchipri, cmap=custom_cmap, ax=ax12, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-10.5, vmax=10.5,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+sns.heatmap(Vchipri, cmap=custom_cmap, ax=ax12, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
 ax12.yaxis.set_tick_params(length=0)
 
 cbar_ax = fig.add_axes([0.90, 0.15, 0.02, 0.7])
@@ -1092,7 +1096,7 @@ fig.text(0.86, 0.19, 'SON', fontsize = 14, rotation='vertical')
 fig.text(0.05, 0.42, 'MJO phase', fontsize=14, rotation='vertical')
 fig.subplots_adjust(right=0.85)
 
-plt.savefig('/home/emi/Dropbox/DTEC/MJO/imagenes/heatplotV.png',bbox_inches="tight", dpi=600)
+plt.savefig('/home/emi/Dropbox/DTEC/MJO/imagenes/heatplotS.png',bbox_inches="tight", dpi=600)
 
 
 
