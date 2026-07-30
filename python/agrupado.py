@@ -3,9 +3,10 @@ import numpy as np
 
 # ~ df = pd.read_table('serie-prueba.txt', delimiter = ';', header=None)
 # ~ df.index= pd.date_range(start='1984-01-01', end='2022-12-31', freq = 'D')
-df = pd.read_csv('/home/emi/Dropbox/DTEC/MJO/datos/demanda/hanna/arg-dem.txt', header=None, delimiter=';')
-df.index= pd.date_range(start='2007-01-01', end='2022-12-31', freq = 'D')
-
+df = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/arg-sol.txt', header=None, delimiter=',')
+df.index= pd.date_range(start='2000-01-01', end='2022-12-31', freq = 'D')
+df[3] = pd.to_numeric(df[3], errors='coerce')
+print(df)
 dmedio = df.groupby([df.index.day_of_year]).mean(numeric_only = True)
 dmedio[[0, 1, 2]] = 0  # así me quedan las columnas con la fecha cuando reste abajo
 print(dmedio)
@@ -47,11 +48,12 @@ print(s2)
 #tonces ahora tengo d2 y s1
 #armo un dataframe para hacer la cuenta
 dtotal = pd.DataFrame(index=df.index, data = df[0])
-dtotal[0]=0 # lo inicializo
+dtotal[0]=0.0 # lo inicializo (float, para poder asignar valores no enteros abajo)
 
 for i in d2.index: # para cada día de d2 resto el s2 de ese trimestre y año
     dtotal.loc[i] = d2.loc[i] - s2[month_to_season_dct[i.month], i.year]
 print(dtotal)
-dtotal.to_csv("/home/emi/Dropbox/DTEC/MJO/datos/demanda/hanna/arg-dem_agrup.csv")
+
+dtotal.to_csv("/home/emi/Dropbox/DTEC/MJO/datos/ajuste/uru-sol_agrup.csv")
 
 

@@ -3,15 +3,35 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
 import calendar
-
+'''
+### ARGENTINA
 # serie emi temp
-# ~ dft=pd.read_csv('/home/emi/Dropbox/DTEC/MJO/datos/ajuste/temp-arg.txt', sep=';', header=None, names=['year', 'month', 'day', 'value'])
-dft=pd.read_csv('/home/emi/Dropbox/DTEC/MJO/datos/ajuste/temp-bai.txt', sep=';', header=None, names=['year', 'month', 'day', 'value'])
-
+dft=pd.read_csv('/home/emi/Dropbox/DTEC/MJO/datos/ajuste/temp-arg.txt', sep=';', header=None, names=['year', 'month', 'day', 'value'])
 dft['value'] = pd.to_numeric(dft['value'], errors='coerce')
 temp=dft.set_index(pd.to_datetime(dft[['year', 'month', 'day']]) )['value']
 # serie emi demanda
 dfd = pd.read_csv('/home/emi/Dropbox/DTEC/MJO/datos/ajuste/arg-dem.txt', sep=';', header=None, names=['year', 'month', 'day', 'value'], decimal=',')
+dfd['value'] = pd.to_numeric(dfd['value'], errors='coerce')
+dem=dfd.set_index(pd.to_datetime(dfd[['year', 'month', 'day']]))['value']
+
+### URUGUAY
+# serie emi temp
+dft=pd.read_csv('/home/emi/Dropbox/DTEC/MJO/datos/ajuste/temp-uru.txt', sep=';', header=None, names=['year', 'month', 'day', 'value'])
+dft['value'] = pd.to_numeric(dft['value'], errors='coerce')
+temp=dft.set_index(pd.to_datetime(dft[['year', 'month', 'day']]) )['value']
+# serie emi demanda
+dfd = pd.read_csv('/home/emi/Dropbox/DTEC/MJO/datos/ajuste/uru-dem.txt', sep=';', header=None, names=['year', 'month', 'day', 'value'], decimal=',')
+dfd['value'] = pd.to_numeric(dfd['value'], errors='coerce')
+dem=dfd.set_index(pd.to_datetime(dfd[['year', 'month', 'day']]))['value']
+'''
+
+### CHILE
+# serie emi temp
+dft=pd.read_csv('/home/emi/Dropbox/DTEC/MJO/datos/ajuste/temp-chi.txt', sep=';', header=None, names=['year', 'month', 'day', 'value'])
+dft['value'] = pd.to_numeric(dft['value'], errors='coerce')
+temp=dft.set_index(pd.to_datetime(dft[['year', 'month', 'day']]) )['value']
+# serie emi demanda
+dfd = pd.read_csv('/home/emi/Dropbox/DTEC/MJO/datos/ajuste/chi-dem2.txt', sep=';', header=None, names=['year', 'month', 'day', 'value'], decimal=',')
 dfd['value'] = pd.to_numeric(dfd['value'], errors='coerce')
 dem=dfd.set_index(pd.to_datetime(dfd[['year', 'month', 'day']]))['value']
 
@@ -27,8 +47,8 @@ df['cdd'] = (temp - T_base_cdd).clip(lower=0)
 df['t'] = np.arange(len(df))
 df['cero'] = np.ones(len(df))
 
-#recorto el período que voy a usar
-df = df.loc[(df.index.year > 2016) & (df.index.year < 2020)]
+#recorto el período que voy a usar > 2017 para CHILE
+df = df.loc[(df.index.year > 2018) & (df.index.year < 2022)]
 
 # ajusto una forma más sencilla todavía
 X = df[['cero','t','temp']].values
@@ -108,6 +128,6 @@ X = np.concat([
 plt.figure(figsize=(4,3))
 df['dem9']=X@beta9
 df['dem9'].resample('ME').mean().plot(ax=plt.gca())
-df[['temp', 'dem9']].to_csv('dem9.csv',float_format='%6.1f')
+df[['dem9']].to_csv('demCHI.csv',float_format='%6.1f')
 
 plt.show()

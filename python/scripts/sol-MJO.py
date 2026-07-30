@@ -9,20 +9,21 @@ from matplotlib.colors import LinearSegmentedColormap, Normalize
 from scipy.stats import mannwhitneyu
 
 #################################
-#######DEMANDA####################
+#######SOL####################
 #################################
 
-Vuru = pd.read_csv('/home/emi/Dropbox/DTEC/MJO/datos/ajuste/uru-dem_agrup.csv', header=None, delimiter=',', na_values='-99')
-Varg = pd.read_csv('/home/emi/Dropbox/DTEC/MJO/datos/ajuste/arg-dem_agrup.csv', header=None, delimiter=',', na_values='-99')
-Vchi = pd.read_csv('/home/emi/Dropbox/DTEC/MJO/datos/series/arg-demanda.csv', header=None, delimiter=',', na_values='-99')
-print(Varg)
-Vuru_cruda = pd.read_csv('/home/emi/Dropbox/DTEC/MJO/datos/ajuste/demURU.csv', header=None, delimiter=',', na_values='-99')
-Varg_cruda = pd.read_csv('/home/emi/Dropbox/DTEC/MJO/datos/ajuste/demARG.csv', header=None, delimiter=',', na_values='-99')
-Vchi_cruda = pd.read_csv('/home/emi/Dropbox/DTEC/MJO/datos/ajuste/demCHI.csv', header=None, delimiter=';', na_values='-99')
-print(Varg_cruda)
+Vuru = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/uru-sol-agrup.csv', header=None, delimiter=',', na_values='-99')
+Varg = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/arg-sol-agrup.csv', header=None, delimiter=',', na_values='-99')
+Vchi = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/chi-sol-agrup.csv', header=None, delimiter=',', na_values='-99')
+
+Vuru_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/uru-sol.txt', header=None, delimiter=';', na_values='-99')
+Varg_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/arg-sol.txt', header=None, delimiter=';', na_values='-99')
+Vchi_cruda = pd.read_csv('/home/emi/Documents/MJO/datos/series viento-sol/chi-sol.txt', header=None, delimiter=';', na_values='-99')
+
+
 # ~ Vmad = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/WH.txt', header=None, delimiter=',', na_values='-99') ### year, month, day, day of week, RMM1, RMM2, phase, amplitude
-Vmad = pd.read_csv('/home/emi/Dropbox/DTEC/MJO/datos/mjo/filtered.txt', header=None, delimiter=',', na_values='-99') ### year, month, day, day of week, RMM1, RMM2, phase, amplitude
-print(Vmad)
+Vmad = pd.read_csv('/home/emi/Documents/MJO/datos/mjo/filtered.txt', header=None, delimiter=',', na_values='-99') ### year, month, day, day of week, RMM1, RMM2, phase, amplitude
+
 # lag 0
 series0 = pd.DataFrame()
 # cargamos mes, para despues filtrar por estacion
@@ -148,67 +149,93 @@ Pchioto = make_df(pvals_store, 'chi', 'oto')
 Pchiinv = make_df(pvals_store, 'chi', 'inv')
 Pchipri = make_df(pvals_store, 'chi', 'pri')
 
-# ~ vmin = min(Vargver.min().min(), Vargoto.min().min(), Varginv.min().min(), Vargpri.min().min(),Vuruver.min().min(), Vuruoto.min().min(), Vuruinv.min().min(), Vurupri.min().min(),Vchiver.min().min(), Vchioto.min().min(), Vchiinv.min().min(), Vchipri.min().min())
-# ~ vmax = max(Vargver.max().max(), Vargoto.max().max(), Varginv.max().max(), Vargpri.max().max(),Vuruver.max().max(), Vuruoto.max().max(), Vuruinv.max().max(), Vurupri.max().max(),Vchiver.max().max(), Vchioto.max().max(), Vchiinv.max().max(), Vchipri.max().max())
+vmin = min(Vargver.min().min(), Vargoto.min().min(), Varginv.min().min(), Vargpri.min().min(),Vuruver.min().min(), Vuruoto.min().min(), Vuruinv.min().min(), Vurupri.min().min(),Vchiver.min().min(), Vchioto.min().min(), Vchiinv.min().min(), Vchipri.min().min())
+vmax = max(Vargver.max().max(), Vargoto.max().max(), Varginv.max().max(), Vargpri.max().max(),Vuruver.max().max(), Vuruoto.max().max(), Vuruinv.max().max(), Vurupri.max().max(),Vchiver.max().max(), Vchioto.max().max(), Vchiinv.max().max(), Vchipri.max().max())
 
-colors = ["slateblue", "white", "green"]
+print(vmin)
+print(vmax)
+
+colors = ["dimgrey", "white", "darkorange"]
 
 # 2. Create the custom colormap object
 # 'BlueToGreenDiverging' is a name for your custom colormap
 custom_cmap = LinearSegmentedColormap.from_list("BlueToGreenDiverging", colors)
 # ~ figax = plt.subplots(nrows=1,ncols=1,figsize=(5,2.5), sharey=True)
-fig, ((ax1,ax2),(ax3,ax4)) = plt.subplots(2, 2,figsize=(5,3), sharex= True, sharey=True)
+fig, ((ax1,ax2,ax3),(ax4,ax5,ax6),(ax7,ax8,ax9),(ax10,ax11,ax12)) = plt.subplots(4, 3,figsize=(7,5), sharex= True, sharey=True)
 
 # ~ annot_matrix = N.where(Vargver > 5  , '*', '')
 annot_matrix = N.where(Pargver < 0.05, '*', '')
-ax1.set_title('Argentina  ', fontsize=11)
-res = sns.heatmap(Vargver,cmap=custom_cmap, ax=ax1, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin = -2.5, vmax = 2.5,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
-for _, spine in res.spines.items():
-    spine.set_visible(True)
-    spine.set_linewidth(1)
+ax1.set_title('Argentina  ', fontsize=13)
+sns.heatmap(Vargver,cmap=custom_cmap, ax=ax1, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center'})
 ax1.set_yticklabels(ax1.get_yticklabels(), rotation=0)
 ax1.xaxis.set_tick_params(length=0)
 
+annot_matrix = N.where(Pargoto < 0.05, '*', '')
+sns.heatmap(Vargoto, cmap=custom_cmap, ax=ax4,yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False)
+ax4.set_yticklabels(ax4.get_yticklabels(), rotation=0)
+ax4.xaxis.set_tick_params(length=0)
 
 annot_matrix = N.where(Parginv < 0.05, '*', '')
-res = sns.heatmap(Varginv,cmap=custom_cmap, ax=ax3, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin = -2.5, vmax = 2.5,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
-for _, spine in res.spines.items():
-    spine.set_visible(True)
-    spine.set_linewidth(1)
-ax3.set_yticklabels(ax3.get_yticklabels(), rotation=0)
-ax3.xaxis.set_tick_params(length=0)
+sns.heatmap(Varginv,cmap=custom_cmap, ax=ax7, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+ax7.set_yticklabels(ax7.get_yticklabels(), rotation=0)
+ax7.xaxis.set_tick_params(length=0)
 
+annot_matrix = N.where(Pargpri < 0.05, '*', '')
+sns.heatmap(Vargpri, cmap=custom_cmap, ax=ax10, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+ax10.set_yticklabels(ax10.get_yticklabels(), rotation=0)
 
-ax2.set_title('Uruguay', fontsize=11)
+ax2.set_title('Uruguay', fontsize=13)
 annot_matrix = N.where(Puruver < 0.05, '*', '')
-res = sns.heatmap(Vuruver, cmap=custom_cmap, ax=ax2, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin = -2.5, vmax = 2.5,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
-for _, spine in res.spines.items():
-    spine.set_visible(True)
-    spine.set_linewidth(1)
+sns.heatmap(Vuruver, cmap=custom_cmap, ax=ax2, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
 ax2.xaxis.set_tick_params(length=0)
 ax2.yaxis.set_tick_params(length=0)
 
+annot_matrix = N.where(Puruoto < 0.05, '*', '')
+sns.heatmap(Vuruoto,cmap=custom_cmap, ax=ax5,yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+ax5.xaxis.set_tick_params(length=0)
+ax5.yaxis.set_tick_params(length=0)
 
 annot_matrix = N.where(Puruinv < 0.05, '*', '')
-res = sns.heatmap(Vuruinv, cmap=custom_cmap, ax=ax4, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin = -2.5, vmax = 2.5,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
-for _, spine in res.spines.items():
-    spine.set_visible(True)
-    spine.set_linewidth(1)
-ax4.xaxis.set_tick_params(length=0)
-ax4.yaxis.set_tick_params(length=0)
+sns.heatmap(Vuruinv, cmap=custom_cmap, ax=ax8, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+ax8.xaxis.set_tick_params(length=0)
+ax8.yaxis.set_tick_params(length=0)
 
+annot_matrix = N.where(Purupri < 0.05, '*', '')
+sns.heatmap(Vurupri, cmap=custom_cmap, ax=ax11, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+ax11.yaxis.set_tick_params(length=0)
+
+ax3.set_title('Chile', fontsize=13)
+annot_matrix = N.where(Pchiver < 0.05, '*', '')
+sns.heatmap(Vchiver, cmap=custom_cmap, ax=ax3, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+ax3.xaxis.set_tick_params(length=0)
+ax3.yaxis.set_tick_params(length=0)
+
+annot_matrix = N.where(Pchioto < 0.05, '*', '')
+sns.heatmap(Vchioto, cmap=custom_cmap, ax=ax6,yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+ax6.xaxis.set_tick_params(length=0)
+ax6.yaxis.set_tick_params(length=0)
+
+annot_matrix = N.where(Pchiinv < 0.05, '*', '')
+sns.heatmap(Vchiinv, cmap=custom_cmap, ax=ax9, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+ax9.xaxis.set_tick_params(length=0)
+ax9.yaxis.set_tick_params(length=0)
+
+annot_matrix = N.where(Pchipri < 0.05, '*', '')
+sns.heatmap(Vchipri, cmap=custom_cmap, ax=ax12, yticklabels=['1', '2', '3', '4', '5', '6', '7', '8'], vmin =-14, vmax=14,cbar=False, annot=annot_matrix, fmt='', annot_kws={'size': 12, 'color': 'black','va': 'center_baseline'})
+ax12.yaxis.set_tick_params(length=0)
 
 cbar_ax = fig.add_axes([0.90, 0.15, 0.02, 0.7])
-norm = plt.Normalize(vmin=-2.5, vmax=2.5)
+norm = plt.Normalize(vmin=-10.5, vmax=10.5)
 sm = plt.cm.ScalarMappable(cmap=custom_cmap, norm=norm)
-cbar= fig.colorbar(sm, ax=(ax1,ax2,ax3,ax4), location='right', shrink=0.8, cax=cbar_ax)
-cbar.set_label('variation [%]', fontsize=12)
+cbar= fig.colorbar(sm, ax=(ax1,ax2,ax3,ax4,ax5,ax6,ax7,ax8,ax9,ax10,ax11,ax12), location='right', shrink=0.8, cax=cbar_ax)
+cbar.set_label('variation [%]', fontsize=14)
 
-fig.subplots_adjust(wspace=0.05, hspace=0.1)
-fig.text(0.86, 0.66, 'DJF', fontsize = 12, rotation='vertical')
-fig.text(0.86, 0.28, 'JJA', fontsize = 12, rotation='vertical')
-fig.text(0.02, 0.38, 'MJO phase', fontsize=12, rotation='vertical')
+fig.subplots_adjust(wspace=0.1, hspace=0.1)
+fig.text(0.86, 0.77, 'DJF', fontsize = 14, rotation='vertical')
+fig.text(0.86, 0.57, 'MAM', fontsize = 14, rotation='vertical')
+fig.text(0.86, 0.39, 'JJA', fontsize = 14, rotation='vertical')
+fig.text(0.86, 0.19, 'SON', fontsize = 14, rotation='vertical')
+fig.text(0.05, 0.42, 'MJO phase', fontsize=14, rotation='vertical')
 fig.subplots_adjust(right=0.85)
 
-plt.savefig('/home/emi/Dropbox/DTEC/MJO/imagenes/heatplotD.png',bbox_inches="tight", dpi=600)
-# ~ plt.savefig('/home/emi/Dropbox/DTEC/MJO/imagenes/heatplotD.svg',bbox_inches="tight", dpi=600)
+plt.savefig('/home/emi/Dropbox/DTEC/MJO/imagenes/heatplotS.png',bbox_inches="tight", dpi=600)
